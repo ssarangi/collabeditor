@@ -10,9 +10,15 @@ $("#form").submit(function() {
 });
 
 socket.on('chat message', function(msg) {
-    $("#messages").append($('<li>').text(msg));
+    var s = $("#text").val();
+    $("#text").val(msg);
 });
 
 socket.on('user_connected', function(user) {
-   $("#messages").append($('<li style="background:red">').text(user + " joined the chat")); 
+   $("#text").append($('<li style="background:red">').text(user + " joined the chat")); 
 });
+
+function textbox_buttonpress(e, val) {
+    var c = String.fromCharCode(e.which);
+    socket.emit("chat_message", val + c);
+}
